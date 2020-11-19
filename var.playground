@@ -1,0 +1,108 @@
+// задача 1
+
+enum ServerError: Error {
+    case badRequest
+    case notFound
+    case internalServerError
+}
+
+let badRequest: Bool = false
+let notFound: Bool = true
+let internalServerError: Bool = false
+
+do {
+    if badRequest {
+        throw ServerError.badRequest
+    }
+
+    if notFound {
+        throw ServerError.notFound
+    }
+
+    if internalServerError {
+        throw ServerError.internalServerError
+    }
+} catch ServerError.badRequest {
+    print("400 Неверный запрос")
+} catch ServerError.notFound {
+    print("404 Страница не найдена")
+} catch ServerError.internalServerError {
+    print("500 Внутренняя ошибка сервера")
+}
+
+// задача 2
+
+func checkError() throws {
+    if badRequest {
+        throw ServerError.badRequest
+    }
+    if notFound {
+        throw ServerError.notFound
+    }
+    if internalServerError {
+        throw ServerError.internalServerError
+    }
+}
+
+do {
+  try checkError()
+} catch ServerError.badRequest {
+    print("400 Неверный запрос")
+} catch ServerError.notFound {
+    print("404 Страница не найдена")
+} catch ServerError.internalServerError {
+    print("500 Внутренняя ошибка сервера")
+}
+
+// задача 3
+
+func compareParams<T, E>(paramOne: T, paramTwo: E) {
+    let typeOfPparamOne = String(describing: type(of: paramOne))
+    let typeOfPparamTwo = String(describing: type(of: paramTwo))
+    
+    if (typeOfPparamOne == typeOfPparamTwo) {
+        print("Yes")
+    } else {
+        print("No")
+    }
+}
+
+compareParams(paramOne: 2, paramTwo: 2)
+
+// задача 4
+
+enum params: Error {
+    case parameterAreSame
+    case parameterAreDifferent
+}
+
+func compareParamsWithThrow<T, E>(paramOne: T, paramTwo: E) throws {
+    let typeOfPparamOne = String(describing: type(of: paramOne))
+    let typeOfPparamTwo = String(describing: type(of: paramTwo))
+    
+    if (typeOfPparamOne == typeOfPparamTwo) {
+        throw params.parameterAreSame
+    } else {
+        throw params.parameterAreDifferent
+    }
+}
+
+do {
+  try compareParamsWithThrow(paramOne: 2, paramTwo: 2)
+} catch params.parameterAreSame {
+    print("Типы параметров одинаковы")
+} catch params.parameterAreDifferent {
+    print("Типы параметров различны")
+}
+
+// задача 5
+
+func compareParamsWithEquality<T: Equatable>(paramOne: T, paramTwo: T) {
+    if (paramOne == paramTwo) {
+        print("Значения равны")
+    } else {
+        print("Значения не равны")
+    }
+}
+
+compareParamsWithEquality(paramOne: "3", paramTwo: "3")
